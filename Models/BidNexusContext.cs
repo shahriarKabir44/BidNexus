@@ -6,11 +6,10 @@ namespace BidNexus.Models;
 
 public partial class BidNexusContext : DbContext
 {
+    public BidNexusContext()
+    {
+    }
 
-    public BidNexusContext() 
-    { }
-
-    
     public BidNexusContext(DbContextOptions<BidNexusContext> options)
         : base(options)
     {
@@ -31,7 +30,8 @@ public partial class BidNexusContext : DbContext
     public virtual DbSet<UserPermissionMap> UserPermissionMaps { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Name=DefaultConnectionString");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=localhost\\SQL16;Database=BidNexus;Integrated Security=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -96,6 +96,7 @@ public partial class BidNexusContext : DbContext
 
             entity.Property(e => e.BidEndTime).HasColumnType("datetime");
             entity.Property(e => e.BidStartTime).HasColumnType("datetime");
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
             entity.Property(e => e.Name).HasMaxLength(100);
             entity.Property(e => e.UpdateDate).HasColumnType("datetime");
         });

@@ -31,5 +31,9 @@ public partial class Product
 
     public byte StatusEnumId { get; set; }
 
+    public DateTime CreateDate { get; set; }
+
+    public string? History { get; set; }
+
     public virtual ICollection<Bid> Bids { get; set; } = new List<Bid>();
 }
