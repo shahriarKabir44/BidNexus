@@ -25,7 +25,7 @@ public partial class BidNexusContext : DbContext
 
     public virtual DbSet<ProductCategory> ProductCategories { get; set; }
 
-    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<UserAccount> UserAccounts { get; set; }
 
     public virtual DbSet<UserPermissionMap> UserPermissionMaps { get; set; }
 
@@ -109,13 +109,17 @@ public partial class BidNexusContext : DbContext
             entity.Property(e => e.UpdateDate).HasColumnType("datetime");
         });
 
-        modelBuilder.Entity<User>(entity =>
+        modelBuilder.Entity<UserAccount>(entity =>
         {
-            entity.ToTable("User");
+            entity.HasKey(e => e.Id).HasName("PK_User");
+
+            entity.ToTable("UserAccount");
 
             entity.Property(e => e.CreateDate).HasColumnType("datetime");
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.FullName).HasMaxLength(100);
+            entity.Property(e => e.PasswordHash).HasMaxLength(500);
+            entity.Property(e => e.PasswordSalt).HasMaxLength(500);
             entity.Property(e => e.UpdateDate).HasColumnType("datetime");
             entity.Property(e => e.UserName).HasMaxLength(30);
         });

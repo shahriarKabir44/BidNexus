@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BidNexus.Models;
 
-public partial class User
+public partial class UserAccount
 {
     public int Id { get; set; }
 
@@ -26,6 +26,12 @@ public partial class User
     public int UpdateBy { get; set; }
 
     public bool IsDeleted { get; set; }
+
+    public string PasswordHash { get; set; } = null!;
+
+    public string PasswordSalt { get; set; } = null!;
+
+    public byte UserTypeEnumId { get; set; }
 
     public virtual ICollection<Bid> Bids { get; set; } = new List<Bid>();
 

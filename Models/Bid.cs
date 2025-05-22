@@ -15,7 +15,7 @@ public partial class Bid
 
     public DateTime CreateDate { get; set; }
 
-    public virtual User Bidder { get; set; } = null!;
+    public virtual UserAccount Bidder { get; set; } = null!;
 
     public virtual Product Product { get; set; } = null!;
 }

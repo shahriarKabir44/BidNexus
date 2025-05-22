@@ -23,9 +23,9 @@ public partial class Invoice
 
     public byte StatusEnumId { get; set; }
 
-    public virtual User Bidder { get; set; } = null!;
+    public virtual UserAccount Bidder { get; set; } = null!;
 
     public virtual Product Product { get; set; } = null!;
 
-    public virtual User Seller { get; set; } = null!;
+    public virtual UserAccount Seller { get; set; } = null!;
 }

@@ -15,5 +15,5 @@ public partial class UserPermissionMap
 
     public virtual Permission Permission { get; set; } = null!;
 
-    public virtual User User { get; set; } = null!;
+    public virtual UserAccount User { get; set; } = null!;
 }
