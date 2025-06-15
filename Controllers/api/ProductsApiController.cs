@@ -3,6 +3,8 @@ using BidNexus.Models;
 using BidNexus.Repository;
 using BidNexus.Utils;
 using BidNexus.Utils.ControllerBases;
+using BidNexus.Utils.JwtHandlers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,8 +12,9 @@ namespace BidNexus.Controllers.api
 {
     [Route("api/[controller]")]
     [ApiController]
+    [JwtAuthorizeAttribute]
     public class ProductsApiController : ApiBaseController
-    {
+    {   
         public ProductsApiController(BidNexusContext context) : base(context) { }
 
         [HttpGet("GetById")]
@@ -42,11 +45,6 @@ namespace BidNexus.Controllers.api
             return data;
         }
 
-        [HttpGet("Hello")]
-
-        public IActionResult Hello()
-        {
-            return Ok("poop");
-        }
+        
     }
 }

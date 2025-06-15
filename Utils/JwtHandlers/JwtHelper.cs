@@ -5,7 +5,7 @@ using System.Text;
 using BidNexus.Jsons.Custom.Other;
 using BidNexus.Models;
 using Microsoft.IdentityModel.Tokens;
-namespace BidNexus.Utils
+namespace BidNexus.Utils.JwtHandlers
 {
 
     public class JwtHelper
@@ -27,7 +27,7 @@ namespace BidNexus.Utils
 
             var claims = new[]
             {
-                new Claim("userId", user.Id.ToString()),
+                new Claim("Id", user.Id.ToString()),
                 new Claim("UserName", user.UserName),
                 new Claim("UserTypeEnumId", user.UserTypeEnumId.ToString()),
                 new Claim("FullName", user.FullName),

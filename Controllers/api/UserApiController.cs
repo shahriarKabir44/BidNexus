@@ -10,6 +10,8 @@ using BidNexus.Models;
 using BidNexus.Repository;
 using BidNexus.Utils;
 using BidNexus.Utils.ControllerBases;
+using BidNexus.Utils.JwtHandlers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -17,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace BidNexus.Controllers.api
 {
     [Route("api/[controller]")]
+    [AllowAnonymous]
     [ApiController]
     public class UserApiController : ApiBaseController
     {
@@ -29,7 +32,7 @@ namespace BidNexus.Controllers.api
 
 
 
-       
+
 
         public class LoginModel
         {
@@ -38,20 +41,20 @@ namespace BidNexus.Controllers.api
         }
 
         [HttpPost("login")]
-        public async Task<ApiResponse> Login(LoginModel model)
+        public ApiResponse Login(LoginModel model)
         {
             var result = new ApiResponse();
             try
             {
 
-               
+
 
 
                 var jwtSettings = _config.GetSection("Jwt").Get<JwtSettings>();
                 var key = Encoding.ASCII.GetBytes(jwtSettings.Key);
 
 
-                var user = await DbInstance.UserAccounts.FirstOrDefaultAsync(x => x.UserName == model.UserName);
+                var user = DbInstance.UserAccounts.FirstOrDefault(x => x.UserName == model.UserName);
                 if (user == null)
                 {
                     result.HasError = true;
@@ -85,13 +88,13 @@ namespace BidNexus.Controllers.api
 
         }
         [HttpPost("register")]
-        public async Task<ApiResponse> Register(UserAccountJson newUser)
+        public ApiResponse Register(UserAccountJson newUser)
         {
             var result = new ApiResponse();
             var error = "";
             try
             {
-                await using (var scope = await DbInstance.Database.BeginTransactionAsync())
+                using (var scope = DbInstance.Database.BeginTransaction())
                 {
                     if (!IsValidUser(newUser, out error))
                     {
@@ -107,12 +110,12 @@ namespace BidNexus.Controllers.api
                     {
                         result.HasError = true;
                         result.ErrorMsg = error;
-                        await scope.RollbackAsync();
+                        scope.Rollback();
                         return result;
                     }
 
-                    await DbInstance.SaveChangesAsync();
-                    await scope.CommitAsync();
+                    DbInstance.SaveChanges();
+                    scope.Commit();
 
                 }
 
