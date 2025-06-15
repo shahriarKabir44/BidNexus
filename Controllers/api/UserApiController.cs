@@ -21,7 +21,7 @@ namespace BidNexus.Controllers.api
     [Route("api/[controller]")]
     [AllowAnonymous]
     [ApiController]
-    public class UserApiController : ApiBaseController
+    public class UserApiController : BaseController
     {
         private readonly IConfiguration _config;
 

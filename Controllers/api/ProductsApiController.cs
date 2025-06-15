@@ -13,7 +13,7 @@ namespace BidNexus.Controllers.api
     [Route("api/[controller]")]
     [ApiController]
     [JwtAuthorizeAttribute]
-    public class ProductsApiController : ApiBaseController
+    public class ProductsApiController : SecureBaseController
     {   
         public ProductsApiController(BidNexusContext context) : base(context) { }
 
@@ -45,6 +45,12 @@ namespace BidNexus.Controllers.api
             return data;
         }
 
-        
+        [HttpGet("Hello")]
+
+        public IActionResult Hello()
+        {
+            var x = Profile;
+            return Ok("poop");
+        }
     }
 }

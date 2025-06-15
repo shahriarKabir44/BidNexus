@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BidNexus.Utils.ControllerBases
 {
-    public class ApiBaseController : Controller
+     public class BaseController : Controller
     {
         protected BidNexusContext DbInstance { get; set; }
-        public ApiBaseController(BidNexusContext context)
+         public BaseController(BidNexusContext context)
         {
             DbInstance=context;
         }
